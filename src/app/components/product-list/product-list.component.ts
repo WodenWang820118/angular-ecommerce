@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -8,8 +8,8 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-
   products: Product[] = [];
+  displayedColumns: string[] = ['name', 'unitPrice', 'unitsInStock'];
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
