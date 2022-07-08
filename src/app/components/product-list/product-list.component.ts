@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
-  displayedColumns: string[] = ['name', 'unitPrice', 'unitsInStock'];
+  displayedColumns: string[] = ['imageUrl','name', 'unitPrice', 'unitsInStock'];
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
