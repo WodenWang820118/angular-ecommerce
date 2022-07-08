@@ -3,17 +3,21 @@ lockfileVersion: 5.4
 specifiers:
   '@angular-devkit/build-angular': ~13.0.3
   '@angular/animations': ~13.0.0
+  '@angular/cdk': 13.3.9
   '@angular/cli': ~13.0.3
   '@angular/common': ~13.0.0
   '@angular/compiler': ~13.0.0
   '@angular/compiler-cli': ~13.0.0
   '@angular/core': ~13.0.0
   '@angular/forms': ~13.0.0
+  '@angular/material': 13.3.9
   '@angular/platform-browser': ~13.0.0
   '@angular/platform-browser-dynamic': ~13.0.0
   '@angular/router': ~13.0.0
+  '@popperjs/core': ^2.10.2
   '@types/jasmine': ~3.10.0
   '@types/node': ^12.11.1
+  bootstrap: ^5.1.3
   jasmine-core: ~3.10.0
   karma: ~6.3.0
   karma-chrome-launcher: ~3.1.0
@@ -27,13 +31,17 @@ specifiers:
 
 dependencies:
   '@angular/animations': 13.0.3_@angular+core@13.0.3
+  '@angular/cdk': 13.3.9_rdnort2fprylqyspjip5flk3nu
   '@angular/common': 13.0.3_c3rewwpnp22a77glkq7tmekhja
   '@angular/compiler': 13.0.3
   '@angular/core': 13.0.3_rxjs@7.4.0+zone.js@0.11.6
   '@angular/forms': 13.0.3_7gwgiuo25wsd7hcbvfotgnrjfy
+  '@angular/material': 13.3.9_qvba5tilaavf6zf263s273qeoa
   '@angular/platform-browser': 13.0.3_rt2rj5welq7uddhyrr6qnekhxy
   '@angular/platform-browser-dynamic': 13.0.3_a64cwzk26m7kh5dsm2mlsqommq
   '@angular/router': 13.0.3_7gwgiuo25wsd7hcbvfotgnrjfy
+  '@popperjs/core': 2.11.5
+  bootstrap: 5.1.3_@popperjs+core@2.11.5
   rxjs: 7.4.0
   tslib: 2.4.0
   zone.js: 0.11.6
@@ -248,6 +256,21 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /@angular/cdk/13.3.9_rdnort2fprylqyspjip5flk3nu:
+    resolution: {integrity: sha512-XCuCbeuxWFyo3EYrgEYx7eHzwl76vaWcxtWXl00ka8d+WAOtMQ6Tf1D98ybYT5uwF9889fFpXAPw98mVnlo3MA==}
+    peerDependencies:
+      '@angular/common': ^13.0.0 || ^14.0.0-0
+      '@angular/core': ^13.0.0 || ^14.0.0-0
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      '@angular/common': 13.0.3_c3rewwpnp22a77glkq7tmekhja
+      '@angular/core': 13.0.3_rxjs@7.4.0+zone.js@0.11.6
+      rxjs: 7.4.0
+      tslib: 2.4.0
+    optionalDependencies:
+      parse5: 5.1.1
+    dev: false
+
   /@angular/cli/13.0.4:
     resolution: {integrity: sha512-0QMJXFNn57LVg7ZwZFPO90g6aZHDnoe5yCB7fo3nskOhDw1AW/rnbbaNVMVX/SvP30hOOTLsfVJ1Y3I6eKDgRA==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -345,6 +368,27 @@ packages:
     dependencies:
       '@angular/common': 13.0.3_c3rewwpnp22a77glkq7tmekhja
       '@angular/core': 13.0.3_rxjs@7.4.0+zone.js@0.11.6
+      '@angular/platform-browser': 13.0.3_rt2rj5welq7uddhyrr6qnekhxy
+      rxjs: 7.4.0
+      tslib: 2.4.0
+    dev: false
+
+  /@angular/material/13.3.9_qvba5tilaavf6zf263s273qeoa:
+    resolution: {integrity: sha512-FU8lcMgo+AL8ckd27B4V097ZPoIZNRHiCe3wpgkImT1qC0YwcyXZVn0MqQTTFSdC9a/aI8wPm3AbTClJEVw5Vw==}
+    peerDependencies:
+      '@angular/animations': ^13.0.0 || ^14.0.0-0
+      '@angular/cdk': 13.3.9
+      '@angular/common': ^13.0.0 || ^14.0.0-0
+      '@angular/core': ^13.0.0 || ^14.0.0-0
+      '@angular/forms': ^13.0.0 || ^14.0.0-0
+      '@angular/platform-browser': ^13.0.0 || ^14.0.0-0
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      '@angular/animations': 13.0.3_@angular+core@13.0.3
+      '@angular/cdk': 13.3.9_rdnort2fprylqyspjip5flk3nu
+      '@angular/common': 13.0.3_c3rewwpnp22a77glkq7tmekhja
+      '@angular/core': 13.0.3_rxjs@7.4.0+zone.js@0.11.6
+      '@angular/forms': 13.0.3_7gwgiuo25wsd7hcbvfotgnrjfy
       '@angular/platform-browser': 13.0.3_rt2rj5welq7uddhyrr6qnekhxy
       rxjs: 7.4.0
       tslib: 2.4.0
@@ -1766,6 +1810,10 @@ packages:
       - supports-color
     dev: true
 
+  /@popperjs/core/2.11.5:
+    resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
+    dev: false
+
   /@schematics/angular/13.0.4:
     resolution: {integrity: sha512-P9F5c8ApLbEyfNO4TZNsTyAdrtOjwIhrM/P+eEC4/x6nklWlEFE6TGMYTNjiK/RRhkbX1tBs8gcdJLYxtEqPSg==}
     engines: {node: ^12.20.0 || ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -2305,6 +2353,14 @@ packages:
   /boolbase/1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
     dev: true
+
+  /bootstrap/5.1.3_@popperjs+core@2.11.5:
+    resolution: {integrity: sha512-fcQztozJ8jToQWXxVuEyXWW+dSo8AiXWKwiSSrKWsRB/Qt+Ewwza+JWoLKiTuQLaEPhdNAJ7+Dosc9DOIqNy7Q==}
+    peerDependencies:
+      '@popperjs/core': ^2.10.2
+    dependencies:
+      '@popperjs/core': 2.11.5
+    dev: false
 
   /brace-expansion/1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -5166,6 +5222,12 @@ packages:
     dependencies:
       parse5: 6.0.1
     dev: true
+
+  /parse5/5.1.1:
+    resolution: {integrity: sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==}
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /parse5/6.0.1:
     resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
