@@ -1,3 +1,4 @@
+import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,6 +13,15 @@ import { ProductListComponent } from './components/product-list/product-list.com
 // services
 import { ProductService } from './services/product.service';
 
+// from the most specific to generic
+// first match wins
+const routes: Routes = [
+  {path: 'category/:id', component: ProductListComponent},
+  {path: 'category', component: ProductListComponent},
+  {path: 'products', component: ProductListComponent},
+  {path: '', redirectTo: '/products', pathMatch: 'full'},
+  {path: '**', redirectTo: '/products', pathMatch: 'full'}
+]
 
 @NgModule({
   declarations: [
@@ -19,6 +29,7 @@ import { ProductService } from './services/product.service';
     ProductListComponent
   ],
   imports: [
+    RouterModule.forRoot(routes),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
