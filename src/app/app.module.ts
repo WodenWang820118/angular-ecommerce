@@ -42,7 +42,7 @@ const routes: Routes = [
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
   ],
   providers: [
     ProductService
