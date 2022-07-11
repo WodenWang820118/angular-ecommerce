@@ -13,10 +13,12 @@ import { ProductListComponent } from './components/product-list/product-list.com
 // services
 import { ProductService } from './services/product.service';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { SearchComponent } from './components/search/search.component';
 
 // from the most specific to generic
 // first match wins
 const routes: Routes = [
+  {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category/:id', component: ProductListComponent},
   {path: 'category', component: ProductListComponent},
   {path: 'products', component: ProductListComponent},
@@ -28,7 +30,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductCategoryMenuComponent
+    ProductCategoryMenuComponent,
+    SearchComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

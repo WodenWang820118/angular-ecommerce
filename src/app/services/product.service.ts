@@ -13,17 +13,27 @@ export class ProductService {
   
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(currentCategoryId: number): Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${currentCategoryId}`;
+  private getProducts(searchUrl: string): Observable<Product[]> {
     return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
       map(response => response._embedded.product)
     );
+  }
+
+  getProductList(currentCategoryId: number): Observable<Product[]> {
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${currentCategoryId}`;
+    return this.getProducts(searchUrl);
   }
 
   getProductCategories(): Observable<ProductCategory[]> {
     return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
       map(response => response._embedded.productCategory)
     );
+  }
+
+  searchProducts(keyword: string): Observable<Product[]> {
+    // the searchUrl is set and provided by Spring Boot
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}`;
+    return this.getProducts(searchUrl);
   }
 }
 
