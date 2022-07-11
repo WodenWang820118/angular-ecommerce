@@ -12,6 +12,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 
 // services
 import { ProductService } from './services/product.service';
+import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 
 // from the most specific to generic
 // first match wins
@@ -26,7 +27,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductCategoryMenuComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
