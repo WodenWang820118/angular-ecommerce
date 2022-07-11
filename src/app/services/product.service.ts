@@ -30,6 +30,12 @@ export class ProductService {
     );
   }
 
+  getProduct(productId: number): Observable<Product> {
+    // get the JSON format object out of box from Spring Boot REST API
+    const productUrl = `${this.baseUrl}/${productId}`;
+    return this.httpClient.get<Product>(productUrl);
+  }
+
   searchProducts(keyword: string): Observable<Product[]> {
     // the searchUrl is set and provided by Spring Boot
     const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}`;
