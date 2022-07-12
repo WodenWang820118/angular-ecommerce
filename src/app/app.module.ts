@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // services
 import { ProductService } from './services/product.service';
@@ -43,6 +44,7 @@ const routes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     MatTableModule,
+    NgbModule
   ],
   providers: [
     ProductService

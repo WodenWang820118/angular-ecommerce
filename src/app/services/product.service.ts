@@ -19,6 +19,12 @@ export class ProductService {
     );
   }
 
+  getProductListPaginate(page: number, pageSize: number, currentCategoryId: number): Observable<GetResponseProducts> {
+    // Spring Boot supports page and pageSize parameters from JSON objects
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${currentCategoryId}&page=${page}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
+
   getProductList(currentCategoryId: number): Observable<Product[]> {
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${currentCategoryId}`;
     return this.getProducts(searchUrl);
@@ -41,12 +47,24 @@ export class ProductService {
     const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}`;
     return this.getProducts(searchUrl);
   }
+
+  searchProductsPaginate(page: number, pageSize: number, keyword: string): Observable<GetResponseProducts> {
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}&page=${page}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
 }
 
 // unwrap the response to get the list of products
+// Spring Boot supports pagination out of the box, i.e., page
 interface GetResponseProducts {
   _embedded: {
     product: Product[];
+  },
+  page: {
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
   }
 }
 

@@ -11,8 +11,17 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
+  previousCategoryId: number = 1;
   currentCategoryId: number = 1;
   searchMode: boolean = false;
+
+  // pagination
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalElements: number = 0;
+
+  // pagination with keyword
+  previousKeyword: string = '';
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute) { }
@@ -40,20 +49,55 @@ export class ProductListComponent implements OnInit {
     return this.hasCategory() ? Number(this.route.snapshot.paramMap.get('id')) : 1;
   }
 
+  processResult() {
+    return (
+      data: {
+        _embedded: {
+          product: Product[];
+        },
+        page: {
+          number: number;
+          size: number;
+          totalElements: number;
+        }
+      }) => {
+      this.products = data._embedded.product;
+      this.pageNumber = data.page.number + 1;
+      this.pageSize = data.page.size;
+      this.totalElements = data.page.totalElements;
+    }
+  }
+
   handleListProducts() {
-    this.productService.getProductList(this.getCategoryId()).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+    // reset page to 1 with a different category
+    if (this.previousCategoryId !== this.getCategoryId()) {
+      this.pageNumber = 1;
+    }
+
+    this.previousCategoryId = this.getCategoryId();
+
+    this.productService
+      .getProductListPaginate(this.pageNumber - 1, this.pageSize, this.getCategoryId())
+      .subscribe(this.processResult());
   }
 
   handleSearchProducts() {
     const keyword = this.route.snapshot.paramMap.get('keyword') as string;
-    this.productService.searchProducts(keyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+
+    if (this.previousKeyword !== keyword) {
+      this.pageNumber = 1;
+    }
+
+    this.previousKeyword = keyword;
+
+    this.productService
+      .searchProductsPaginate(this.pageNumber - 1, this.pageSize, keyword)
+      .subscribe(this.processResult());
+  }
+
+  updatePageSize(pageSize: string) {
+    this.pageSize = Number(pageSize);
+    this.pageNumber = 1;
+    this.listProducts();
   }
 }
