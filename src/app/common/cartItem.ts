@@ -16,29 +16,31 @@ export class CartItem {
         this.quantity = 1;
     }
 
-    increaseQuantity() {
+    increaseQuantity(): void {
         this.quantity++;
     }
 
-    decreaseQuantity() {
+    decreaseQuantity(): void {
         this.quantity--;
     }
 
-    getId() {
+    getId(): string {
         return this.id;
     }
 
-    getName() {
+    getName(): string {
         return this.name;
     }
 
-    getUnitPrice() {
+    getUnitPrice(): number {
         return this.unitPrice;
     }
 
-    getQuantity() {
+    getQuantity(): number {
         return this.quantity;
     }
 
-
+    getImageUrl(): string {
+        return this.imageUrl;
+    }
 }

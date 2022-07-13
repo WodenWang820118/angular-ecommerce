@@ -8,37 +8,76 @@ import { Product } from '../common/product';
 })
 export class CartService {
 
-  carItems: CartItem[] = [];
+  cartItems: CartItem[] = [];
   totalPrice: Subject<number> = new Subject<number>();
   totalQuantity: Subject<number> = new Subject<number>();
 
   constructor() { }
 
-  addToCart(product: Product) {
-    const cartItem = new CartItem(product);
+  addToCart(product: Product | CartItem): void {
+    const cartItem: CartItem = (product instanceof CartItem) ? product : new CartItem(product);
+
     if (this.hasExistingCartItem(cartItem)) {
-      cartItem.increaseQuantity();
+      this.cartItems.forEach(item => {
+        if (item.getId() === cartItem.getId()) {
+          item.increaseQuantity();
+        }
+      });
     } else {
-      this.carItems.push(cartItem);
+      this.cartItems.push(cartItem);
     }
+    this.computeCartTotalPrice();
+  }
+
+  decrementQuantity(cartItem: CartItem): void {
+    this.cartItems.forEach(item => {
+      if (item.getId() === cartItem.getId()) {
+        if (item.getQuantity() > 1) {
+          item.decreaseQuantity();
+        }
+      }
+    });
+    this.computeCartTotalPrice();
+  }
+
+  removeCartItem(cartItem: CartItem): void {
+    this.cartItems.forEach((item, index) => {
+      if (item.getId() === cartItem.getId()) {
+        this.cartItems.splice(index, 1);
+      }
+    });
+    this.computeCartTotalPrice();
   }
 
   hasExistingCartItem(cartItem: CartItem): boolean {
-    return this.carItems.includes(cartItem);
+    return this.cartItems.some(item => item.getId() === cartItem.getId());
   }
 
-  computeCartTotalPrice() {
+  computeCartTotalPrice(): number {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 
-    this.carItems.forEach(item => {
+    this.cartItems.forEach(item => {
       totalPriceValue += item.getQuantity() * item.getUnitPrice();
       totalQuantityValue += item.getQuantity();
     });
 
-    this.totalPrice.next(totalPriceValue);
-    this.totalQuantity.next(totalQuantityValue);
+    this.updateTotalPrice(totalPriceValue);
+    this.updateTotalQuantity(totalQuantityValue);
+
+    return totalPriceValue;
   }
 
-  
+  updateTotalPrice(newTotalPrice: number): void {
+    this.totalPrice.next(newTotalPrice);
+  }
+
+  updateTotalQuantity(newTotalQuantity: number): void {
+    this.totalQuantity.next(newTotalQuantity);
+  }
+
+  getCartItems(): CartItem[] {
+    return this.cartItems;
+  }
 }
+
