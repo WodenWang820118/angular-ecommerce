@@ -1,3 +1,4 @@
+import { CartService } from './../../services/cart.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/common/product';
@@ -24,7 +25,8 @@ export class ProductListComponent implements OnInit {
   previousKeyword: string = '';
 
   constructor(private productService: ProductService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private cartService: CartService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -99,5 +101,13 @@ export class ProductListComponent implements OnInit {
     this.pageSize = Number(pageSize);
     this.pageNumber = 1;
     this.listProducts();
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+  }
+
+  computeCartTotalPrice() {
+    return this.cartService.computeCartTotalPrice();
   }
 }
