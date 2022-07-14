@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ShopFormService } from 'src/app/services/shop-form.service';
 
 @Component({
   selector: 'app-checkout',
@@ -12,7 +13,11 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private formBuilder: FormBuilder) {
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
+
+  constructor(private formBuilder: FormBuilder,
+              private shopFormService: ShopFormService) {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: [''],
@@ -42,6 +47,19 @@ export class CheckoutComponent implements OnInit {
         expirationYear: ['']
       }),
     });
+
+    // populate credit card months and years
+    this.shopFormService.getCreditCardMonths(1).subscribe(
+      data => {
+        this.creditCardMonths = data;
+      }
+    );
+
+    this.shopFormService.getCreditCardYears().subscribe(
+      data => {
+        this.creditCardYears = data;
+      }
+    )
   }
 
   ngOnInit(): void {
@@ -59,6 +77,18 @@ export class CheckoutComponent implements OnInit {
       );
     } else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
+    }
+  }
+
+  handleMonthsAndYears(selectedYear: string) {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    if (selectedYear === String(currentYear)) {
+      this.shopFormService.getCreditCardMonths(currentMonth).subscribe(
+        data => {
+          this.creditCardMonths = data;
+        }
+      );
     }
   }
 }
