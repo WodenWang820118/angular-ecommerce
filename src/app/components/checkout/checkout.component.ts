@@ -15,6 +15,8 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+  countries: {countryName: string, isoCode: string} [] = [];
+  states: string[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private shopFormService: ShopFormService) {
@@ -47,19 +49,7 @@ export class CheckoutComponent implements OnInit {
         expirationYear: ['']
       }),
     });
-
-    // populate credit card months and years
-    this.shopFormService.getCreditCardMonths(1).subscribe(
-      data => {
-        this.creditCardMonths = data;
-      }
-    );
-
-    this.shopFormService.getCreditCardYears().subscribe(
-      data => {
-        this.creditCardYears = data;
-      }
-    )
+    this.activateShopFormService();
   }
 
   ngOnInit(): void {
@@ -89,6 +79,59 @@ export class CheckoutComponent implements OnInit {
           this.creditCardMonths = data;
         }
       );
+    } else {
+      this.shopFormService.getCreditCardMonths(1).subscribe(
+        data => {
+          this.creditCardMonths = data;
+        }
+      );
     }
+  }
+
+  activateShopFormService() {
+    // populate credit card months and years
+    this.shopFormService.getCreditCardYears().subscribe(
+      data => {
+        this.creditCardYears = data;
+      }
+    );
+
+    // populate months based on the current year as default
+    this.handleMonthsAndYears(String(new Date().getFullYear()));
+
+    this.shopFormService.getCountries().subscribe(
+      data => {
+        this.countries = data;
+      }
+    );
+
+    // populate the first country's states in the list as the default country
+    // might modify this to be the user's country
+    this.shopFormService.getStates(this.countries[0].isoCode).subscribe(
+      data => {
+        this.states = data;
+      }
+    ).unsubscribe();
+  }
+
+  updateStates(event: Event): void {
+    const currentCountryName = (event.target as HTMLInputElement).value;
+    const countryCode = this.getIsoCodeByCountryName(currentCountryName);
+
+    // note some countries don't have states
+    this.shopFormService.getStates(countryCode).subscribe(
+      data => {
+        this.states = data;
+      }
+    );
+  }
+
+  getIsoCodeByCountryName(countryName: string): string {
+    for (let country of this.countries) {
+      if (country.countryName === countryName) {
+        return country.isoCode;
+      }
+    }
+    return 'cannot find ISO code';
   }
 }

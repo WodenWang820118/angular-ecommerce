@@ -57,12 +57,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="state" type="text">
-                                    <option value="">Select State</option>
-                                    <option value="1">New York</option>
-                                    <option value="2">Los Angeles</option>
-                                    <option value="3">Chicago</option>
-                                    <option value="4">Houston</option>
-                                    <option value="5">Philadelphia</option>
+                                    <option *ngFor="let state of states">
+                                        {{state}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -72,11 +69,13 @@
                         <div class="col-md-2"><label>Country</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="country" type="text">
-                                    <option value="">Select Country</option>
-                                    <option value="India">India</option>
-                                    <option value="USA">USA</option>
-                                    <option value="UK">UK</option>
+                                <select
+                                    formControlName="country"
+                                    type="text"
+                                    (change)="updateStates($event)">
+                                    <option *ngFor="let country of countries">
+                                        {{country.countryName}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -129,12 +128,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="state" type="text">
-                                    <option value="">Select State</option>
-                                    <option value="1">New York</option>
-                                    <option value="2">Los Angeles</option>
-                                    <option value="3">Chicago</option>
-                                    <option value="4">Houston</option>
-                                    <option value="5">Philadelphia</option>
+                                    <option *ngFor="let state of states">
+                                        {{state}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -144,11 +140,13 @@
                         <div class="col-md-2"><label>Country</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="country" type="text">
-                                    <option value="">Select Country</option>
-                                    <option value="India">India</option>
-                                    <option value="USA">USA</option>
-                                    <option value="UK">UK</option>
+                                <select
+                                    formControlName="country"
+                                    type="text"
+                                    (change)="updateStates($event)">
+                                    <option *ngFor="let country of countries">
+                                        {{country.countryName}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
