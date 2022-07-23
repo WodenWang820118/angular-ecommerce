@@ -2,6 +2,7 @@ import { ShopValidators } from './../../vlidators/shop-validators';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ShopFormService } from 'src/app/services/shop-form.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -20,7 +21,8 @@ export class CheckoutComponent implements OnInit {
   states: string[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private shopFormService: ShopFormService) {
+              private shopFormService: ShopFormService,
+              private cartService: CartService) {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl(
@@ -112,6 +114,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.reviewCartDetails();
   }
 
   onSubmit() {
@@ -196,6 +199,20 @@ export class CheckoutComponent implements OnInit {
       }
     }
     return 'cannot find ISO code';
+  }
+
+  reviewCartDetails() {
+    this.cartService.totalPrice.subscribe(
+      data => {
+        this.totalPrice = data;
+      }
+    );
+
+    this.cartService.totalQuantity.subscribe(
+      data => {
+        this.totalQuantity = data;
+      }
+    );
   }
 
   get firstName(): AbstractControl | null {
