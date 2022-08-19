@@ -5,9 +5,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginModule } from './components/login/login.module';
 
 // services
 import { ProductService } from './services/product.service';
+import { CheckoutService } from './services/checkout.service';
 
 // components
 import { AppComponent } from './app.component';
@@ -19,6 +21,7 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProductDetailsComponent,
     CartStatusComponent,
     CartDetailsComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    LoginStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -38,10 +42,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatTableModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoginModule,
   ],
   providers: [
-    ProductService
+    ProductService,
+    CheckoutService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,10 +5,10 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
-
 // from the most specific to generic
 // first match wins
 const routes: Routes = [
+  {path: 'login', loadChildren: () => import('../app/components/login/login.module').then(m => m.LoginModule)},
   {path: 'products/:id', component: ProductDetailsComponent},
   {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category/:id', component: ProductListComponent},
@@ -22,6 +22,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }
