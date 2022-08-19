@@ -1,8 +1,14 @@
+import { Router } from '@angular/router';
+import { CheckoutService } from './../../services/checkout.service';
 import { ShopValidators } from './../../vlidators/shop-validators';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ShopFormService } from 'src/app/services/shop-form.service';
 import { CartService } from 'src/app/services/cart.service';
+import { Order } from '../../common/order';
+import { OrderItem } from 'src/app/common/orderItem';
+import { Purchase } from 'src/app/common/purchase';
+import { CartItem } from 'src/app/common/cartItem';
 
 @Component({
   selector: 'app-checkout',
@@ -22,7 +28,9 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private shopFormService: ShopFormService,
-              private cartService: CartService) {
+              private cartService: CartService,
+              private checkoutService: CheckoutService,
+              private router: Router) {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl(
@@ -123,7 +131,53 @@ export class CheckoutComponent implements OnInit {
 
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
+      return;
     }
+
+    // set up order
+    let order = new Order(this.totalQuantity, this.totalPrice);
+
+    // get cart items
+    let cartItems: CartItem[] = this.cartService.cartItems;
+
+    // create order items from cart items
+    let orderItems: OrderItem[] = cartItems.map(cartItem => new OrderItem(cartItem));
+
+    // set up purchase
+    let purchase = new Purchase(
+      this.checkoutFormGroup.controls['customer'].value,
+      this.checkoutFormGroup.controls['shippingAddress'].value,
+      this.checkoutFormGroup.controls['billingAddress'].value,
+      order,
+      orderItems
+    );
+
+    // call REST API via the checkout service
+    this.checkoutService.placeOrder(purchase).subscribe({
+        next: response => {
+          alert('Order submitted successfully. Order id: ' + response.orderTrackingNumber);
+
+          this.resetCart();
+        },
+        error: err => {
+          console.log(err);
+          alert(`There was an error on submitting your order: ${err.message}`);
+        }
+      }
+    );
+  }
+
+  resetCart() {
+    // reset cart data
+    this.cartService.cartItems = [];
+    this.cartService.totalPrice.next(0);
+    this.cartService.totalQuantity.next(0);
+
+    // reset the form
+    this.checkoutFormGroup.reset();
+
+    // navigate back to the products page
+    this.router.navigate(['/products']);
   }
 
   copyShippingAddressToBillingAddress(checked: boolean) {
