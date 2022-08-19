@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "^13.0.0",
     "@angular/router": "^13.0.0",
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
+    "@okta/okta-angular": "^5.2.0",
+    "@okta/okta-signin-widget": "^6.6.2",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "5.2.0-beta1",
     "country-state-city": "^3.0.1",
