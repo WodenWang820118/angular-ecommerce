@@ -13,4 +13,9 @@
         (click)="logout()"
         class="security-btn">Logout
     </button>
+    <button
+    *ngIf="(authStateService.authState$ | async)?.isAuthenticated"
+        (click)="toMembers()"
+        class="security-btn ms-1">Member
+    </button>
 </div>
