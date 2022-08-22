@@ -35,4 +35,8 @@ export class LoginStatusComponent implements OnInit {
     await this.router.navigate(['/login']);
   }
 
+  async toMembers() {
+    await this.router.navigate(['/members']);
+  }
+
 }
