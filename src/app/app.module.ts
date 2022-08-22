@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // services
+import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from './services/checkout.service';
 import { ProductService } from './services/product.service';
 
@@ -24,6 +25,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { SearchComponent } from './components/search/search.component';
 
+// other
+import { Product } from './common/product';
 
 @NgModule({
   declarations: [
@@ -49,8 +52,9 @@ import { SearchComponent } from './components/search/search.component';
     LoginModule,
   ],
   providers: [
+    CartService,
+    CheckoutService,
     ProductService,
-    CheckoutService
   ],
   bootstrap: [AppComponent]
 })

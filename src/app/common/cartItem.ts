@@ -3,10 +3,10 @@ import { Product } from "./product";
 export class CartItem {
 
     private id: string;
-    private name: string;
-    private imageUrl: string;
-    private unitPrice: number;
-    private quantity: number;
+    public name: string;
+    public imageUrl: string;
+    public unitPrice: number;
+    public quantity: number;
 
     constructor(product: Product) {
         this.id = product.id;

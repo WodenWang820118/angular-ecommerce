@@ -12,8 +12,27 @@ export class CartService {
   cartItems: CartItem[] = [];
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
+  storage: Storage = localStorage;
 
-  constructor() { }
+  constructor() {
+    // read data from storage
+    try {
+      this.cartItems = this.getPersistedCartItems();
+    } catch (e) {
+      console.log(e);
+      this.cartItems = [];
+    }
+    // console.log(this.cartItems);
+    this.computeCartTotalPrice();
+  }
+
+  getPersistedCartItems(): CartItem[] {
+    return JSON.parse(this.storage.getItem('cartItems') as string);
+  }
+
+  persistCartItems(): void {
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
+  }
 
   addToCart(product: Product | CartItem): void {
     const cartItem: CartItem = (product instanceof CartItem) ? product : new CartItem(product);
@@ -58,13 +77,16 @@ export class CartService {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 
-    this.cartItems.forEach(item => {
-      totalPriceValue += item.getQuantity() * item.getUnitPrice();
-      totalQuantityValue += item.getQuantity();
+    this.cartItems.forEach((item: CartItem) => {
+      totalPriceValue += item.quantity * item.unitPrice;
+      totalQuantityValue += item.quantity;
     });
 
     this.updateTotalPrice(totalPriceValue);
     this.updateTotalQuantity(totalQuantityValue);
+
+    // persist cart items
+    this.persistCartItems();
 
     return totalPriceValue;
   }

@@ -13,7 +13,12 @@ export class CartDetailsComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {
+    // setInterval(() => {
+    //   this.listCartDetails();
+    //   this.cartService.computeCartTotalPrice();
+    // }, 1000);
+  }
 
   ngOnInit(): void {
     this.listCartDetails();
