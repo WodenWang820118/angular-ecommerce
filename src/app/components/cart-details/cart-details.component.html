@@ -12,11 +12,11 @@
 
                     <tr *ngFor="let cartItem of cartItems">
                         <td>
-                            <img src="{{cartItem.getImageUrl()}}" class="mx-auto d-block" width="150px">
+                            <img src="{{cartItem.imageUrl}}" class="mx-auto d-block" width="150px">
                         </td>
                         <td>
-                            <p>{{cartItem.getName()}}</p>
-                            <p>{{cartItem.getUnitPrice()}}</p>
+                            <p>{{cartItem.name}}</p>
+                            <p>{{cartItem.unitPrice}}</p>
                         </td>
                         <td>
                             <div class="items">
@@ -28,7 +28,7 @@
                                         </button>
                                     </div>
                                     <div class="col mt-2 mr-2">
-                                        {{cartItem.getQuantity()}}
+                                        {{cartItem.quantity}}
                                     </div>
                                     <div class="col">
                                         <button (click)="decrementQuantity(cartItem)" class="btn btn-primary btn-sm">
@@ -41,7 +41,7 @@
                             <div>
                                 <button (click)="removeCartItem(cartItem)" class="btn btn-primary btn-sm mt-2">Delete</button>
                             </div>
-                            <p class="mt-2">Subtotal: {{cartItem.getQuantity() * cartItem.getUnitPrice()}}</p>
+                            <p class="mt-2">Subtotal: {{cartItem.quantity * cartItem.unitPrice}}</p>
                         </td>
                     </tr>
                     <tr>
