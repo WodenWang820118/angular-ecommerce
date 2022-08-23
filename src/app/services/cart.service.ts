@@ -17,12 +17,13 @@ export class CartService {
   constructor() {
     // read data from storage
     try {
-      this.cartItems = this.getPersistedCartItems();
+      // avoid null pointer exception
+      this.cartItems = this.getPersistedCartItems() || [];
     } catch (e) {
       console.log(e);
       this.cartItems = [];
     }
-    // console.log(this.cartItems);
+    console.log(this.cartItems);
     this.computeCartTotalPrice();
   }
 
@@ -74,6 +75,8 @@ export class CartService {
   }
 
   computeCartTotalPrice(): number {
+    if (this.cartItems.length === 0) {return -1;}
+
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 
