@@ -14,10 +14,6 @@ export class CartDetailsComponent implements OnInit {
   totalQuantity: number = 0;
 
   constructor(private cartService: CartService) {
-    // setInterval(() => {
-    //   this.listCartDetails();
-    //   this.cartService.computeCartTotalPrice();
-    // }, 1000);
   }
 
   ngOnInit(): void {

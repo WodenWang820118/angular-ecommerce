@@ -9,6 +9,7 @@ import { OktaAuthGuard } from '@okta/okta-angular';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 
@@ -16,6 +17,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 // from the most specific to generic
 // first match wins
 const routes: Routes = [
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard]},
   {path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard]},
   {path: 'login', loadChildren: () => import('../app/components/login/login.module').then(m => m.LoginModule)},
   {path: 'products/:id', component: ProductDetailsComponent},
