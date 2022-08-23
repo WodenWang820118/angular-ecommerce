@@ -12,6 +12,7 @@ export class LoginStatusComponent implements OnInit {
 
   isAuthenticated: boolean = false;
   userFullName: string = '';
+  storage: Storage = sessionStorage;
 
   constructor(public authStateService: OktaAuthStateService,
               @Inject(OKTA_AUTH) private oktaAuth: OktaAuth,
@@ -22,7 +23,10 @@ export class LoginStatusComponent implements OnInit {
     if (this.isAuthenticated) {
       const userClaims = await this.oktaAuth.getUser();
       this.userFullName = userClaims.name as string;
-      console.log(`The user: ${userClaims.name} has logged in`);
+      const email = userClaims.email as string;
+      // console.log(`The user: ${userClaims.name} has logged in`);
+      // console.log(`The user email: ${email}`);
+      this.storage.setItem('userEmail', JSON.stringify(email));
     }
   }
 
@@ -37,6 +41,10 @@ export class LoginStatusComponent implements OnInit {
 
   async toMembers() {
     await this.router.navigate(['/members']);
+  }
+
+  async toOrderHistory() {
+    await this.router.navigate(['/order-history']);
   }
 
 }

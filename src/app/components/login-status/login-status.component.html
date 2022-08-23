@@ -14,8 +14,13 @@
         class="security-btn">Logout
     </button>
     <button
-    *ngIf="(authStateService.authState$ | async)?.isAuthenticated"
+        *ngIf="(authStateService.authState$ | async)?.isAuthenticated"
         (click)="toMembers()"
         class="security-btn ms-1">Member
+    </button>
+    <button
+        *ngIf="(authStateService.authState$ | async)?.isAuthenticated"
+        (click)="toOrderHistory()"
+        class="security-btn ms-1">Orders
     </button>
 </div>

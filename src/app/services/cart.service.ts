@@ -17,12 +17,13 @@ export class CartService {
   constructor() {
     // read data from storage
     try {
-      this.cartItems = this.getPersistedCartItems();
+      // avoid null pointer exception
+      this.cartItems = this.getPersistedCartItems() || [];
     } catch (e) {
       console.log(e);
       this.cartItems = [];
     }
-    // console.log(this.cartItems);
+    console.log(this.cartItems);
     this.computeCartTotalPrice();
   }
 
@@ -39,8 +40,8 @@ export class CartService {
 
     if (this.hasExistingCartItem(cartItem)) {
       this.cartItems.forEach(item => {
-        if (item.getId() === cartItem.getId()) {
-          item.increaseQuantity();
+        if (item.id === cartItem.id) {
+          item.quantity++;
         }
       });
     } else {
@@ -51,9 +52,9 @@ export class CartService {
 
   decrementQuantity(cartItem: CartItem): void {
     this.cartItems.forEach(item => {
-      if (item.getId() === cartItem.getId()) {
-        if (item.getQuantity() > 1) {
-          item.decreaseQuantity();
+      if (item.id === cartItem.id) {
+        if (item.quantity > 1) {
+          item.quantity--;
         }
       }
     });
@@ -62,7 +63,7 @@ export class CartService {
 
   removeCartItem(cartItem: CartItem): void {
     this.cartItems.forEach((item, index) => {
-      if (item.getId() === cartItem.getId()) {
+      if (item.id === cartItem.id) {
         this.cartItems.splice(index, 1);
       }
     });
@@ -70,10 +71,12 @@ export class CartService {
   }
 
   hasExistingCartItem(cartItem: CartItem): boolean {
-    return this.cartItems.some(item => item.getId() === cartItem.getId());
+    return this.cartItems.some(item => item.id === cartItem.id);
   }
 
   computeCartTotalPrice(): number {
+    if (this.cartItems.length === 0) {return -1;}
+
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 

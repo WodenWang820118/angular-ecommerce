@@ -10,6 +10,6 @@ export class OrderItem {
         this.imageUrl = cartItem.imageUrl;
         this.unitPrice = cartItem.unitPrice;
         this.quantity = cartItem.quantity;
-        this.productId = cartItem.getId();
+        this.productId = cartItem.id;
     }
 }
