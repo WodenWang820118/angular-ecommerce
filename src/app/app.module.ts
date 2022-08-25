@@ -1,43 +1,64 @@
-import { Routes, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginModule } from './components/login/login.module';
+import { MatTableModule } from '@angular/material/table';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// services
+import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { CartService } from 'src/app/services/cart.service';
+import { CheckoutService } from './services/checkout.service';
+import { OrderHistoryService } from './services/order-history.service';
+import { ProductService } from './services/product.service';
 
 // components
 import { AppComponent } from './app.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
+import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
+import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { SearchComponent } from './components/search/search.component';
 
-// services
-import { ProductService } from './services/product.service';
-
-// from the most specific to generic
-// first match wins
-const routes: Routes = [
-  {path: 'category/:id', component: ProductListComponent},
-  {path: 'category', component: ProductListComponent},
-  {path: 'products', component: ProductListComponent},
-  {path: '', redirectTo: '/products', pathMatch: 'full'},
-  {path: '**', redirectTo: '/products', pathMatch: 'full'}
-]
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductCategoryMenuComponent,
+    SearchComponent,
+    ProductDetailsComponent,
+    CartStatusComponent,
+    CartDetailsComponent,
+    CheckoutComponent,
+    LoginStatusComponent,
+    MembersPageComponent,
+    OrderHistoryComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
+    NgbModule,
+    ReactiveFormsModule,
+    LoginModule,
   ],
   providers: [
-    ProductService
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+    CartService,
+    CheckoutService,
+    OrderHistoryService,
+    ProductService,
   ],
   bootstrap: [AppComponent]
 })

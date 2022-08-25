@@ -1,7 +1,8 @@
 export interface Product {
+    id: string;
     sku: string;
     name: string;
-    descrtiption: string;
+    description: string;
     unitPrice: number;
     imageUrl: string;
     active: boolean;
